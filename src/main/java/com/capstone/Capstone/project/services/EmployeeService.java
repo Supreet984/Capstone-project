@@ -83,34 +83,6 @@ public class EmployeeService {
 
         return encryptedText;
     }
-
-    public static String decrypt(String encryptedText) throws Exception {
-        String ALGORITHM = "AES/CBC/PKCS5Padding";
-        String KEY = "0123456789abcdef0123456789abcdef";
-        String IV = "0123456789abcdef";
-        byte[] keyBytes = KEY.getBytes(StandardCharsets.UTF_8);
-        SecretKeySpec keySpec = new SecretKeySpec(keyBytes, "AES");
-
-        byte[] ivBytes = IV.getBytes(StandardCharsets.UTF_8);
-        IvParameterSpec ivSpec = new IvParameterSpec(ivBytes);
-
-        Cipher cipher = Cipher.getInstance(ALGORITHM);
-        cipher.init(Cipher.DECRYPT_MODE, keySpec, ivSpec);
-
-        byte[] encryptedBytes = Base64.getDecoder().decode(encryptedText);
-        byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
-        String decryptedText = new String(decryptedBytes, StandardCharsets.UTF_8);
-
-        return decryptedText;
-    }
-
-    public static void main(String[] args) throws Exception {
-        String plainText = "Hello World";
-        String cipherText = null;
-        cipherText = encrypt(plainText);
-        System.out.println("Encrypted Text: " + cipherText);
-        System.out.println("Decrypted Text: " + decrypt(cipherText));
-    }
 }
 
 @Data

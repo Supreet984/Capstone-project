@@ -12,6 +12,8 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
+@Builder
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

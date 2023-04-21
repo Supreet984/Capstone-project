@@ -1,8 +1,11 @@
 package com.capstone.Capstone.project.Controller;
 
+import com.capstone.Capstone.project.CapstoneProjectApplication;
 import com.capstone.Capstone.project.entities.Employee;
 import com.capstone.Capstone.project.services.EmployeeService;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,41 +13,66 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class EmployeeController {
     private final EmployeeService employeeService;
-
+    private static final Logger logger = LoggerFactory.getLogger(CapstoneProjectApplication.class);
     // default
     @GetMapping("/")
     public String home() {
-        return "<h1>Serving from Spring Boot, Hosted on Kubernetes Cluster on GCP</h1>";
+        logger.info("Home Page");
+        String html = "<h1>Serving from Spring Boot, Hosted on Kubernetes Cluster on GCP</h1>";
+        //field to enter employee id, when clicked, it will redirect to /employees/{id}
+        html += """
+                <form action="/employees/byID" method="get">
+                  Employee ID:<br>
+                  <input type="text" name="id" value="">
+                  <br>
+                  <input type="submit" value="Submit">
+                </form>\s""";
+        //button to redirect to /employees
+        html += "<form action=\"/employees\" method=\"get\">\n" +
+                "  <input type=\"submit\" value=\"Get All Employees\">\n" +
+                "</form> ";
+        return html;
     }
 
     //get all
     @GetMapping("/employees")
     public ResponseEntity<?> getAllEmployees() {
+        logger.info("Get All Employees");
         return employeeService.getAllEmployees();
     }
 
     //get by id
     @GetMapping("/employees/{id}")
     public ResponseEntity<?> getEmployeeById(@PathVariable Long id) {
+        logger.info("Get Employee By ID: " + id);
         return employeeService.getEmployeeById(id);
     }
 
     //add
     @PostMapping("/employees/add")
     public ResponseEntity<?> addEmployee(@RequestBody Employee employee) throws Exception {
+        logger.info("Add Employee: " + employee.getEmployeeName() + " " + employee.getDateOfBirth());
         return employeeService.addEmployee(employee);
     }
 
     //update
     @PutMapping("/employees/update")
     public ResponseEntity<?> updateEmployee(@RequestBody Employee employee) {
+        logger.info("Update Employee: " + employee.getEmployeeName() + " " + employee.getDateOfBirth());
         return employeeService.updateEmployee(employee);
     }
 
     @DeleteMapping("/employees/delete/{id}")
     public ResponseEntity<?> deleteEmployee(@PathVariable Long id) {
+        logger.info("Delete Employee: " + id);
         return employeeService.deleteEmployee(id);
     }
 
+    //employees/byID?id=1
+    @GetMapping("/employees/byID")
+    public ResponseEntity<?> getEmployeeByIdParam(@RequestParam Long id) {
+        logger.info("Get Employee By ID: " + id);
+        return employeeService.getEmployeeById(id);
+    }
 
 }
