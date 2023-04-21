@@ -14,19 +14,7 @@ public class EmployeeController {
     // default
     @GetMapping("/")
     public String home() {
-        return "<h1>Welcome to Employee Management System</h1><br>" +
-                "<h2>Available Endpoints</h2><br>" +
-                "<h3>GET</h3><br>" +
-                "<p>/employees</p><br>" +
-                "<p>/employees/{id}</p><br>" +
-                "<h3>POST</h3><br>" +
-                "<p>/employees/add</p><br>" +
-                "<h3>PUT</h3><br>" +
-                "<p>/employees/update</p><br>" +
-                "<h3>DELETE</h3><br>" +
-                "<p>/employees/delete/{id}</p><br>";
-
-
+        return "<h1>Serving from Spring Boot, Hosted on Kubernetes Cluster on GCP</h1>";
     }
 
     //get all
@@ -43,7 +31,7 @@ public class EmployeeController {
 
     //add
     @PostMapping("/employees/add")
-    public ResponseEntity<?> addEmployee(@RequestBody Employee employee) {
+    public ResponseEntity<?> addEmployee(@RequestBody Employee employee) throws Exception {
         return employeeService.addEmployee(employee);
     }
 

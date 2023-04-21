@@ -23,7 +23,5 @@ public class Employee {
 
     //DateOfBirth
     @Column(name = "date_of_birth")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Temporal(TemporalType.DATE)
-    private Date dob;
+    private String dateOfBirth;
 }
