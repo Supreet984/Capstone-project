@@ -13,13 +13,13 @@ public class Fetcher {
     public static void main(String[] args) {
         Fetcher fetcher = new Fetcher();
         System.out.println(fetcher.fetchEmployeeById(1L));
-        System.out.println(fetcher.fetchEmployeeById(2L).getDateOfBirth());
-        System.out.println(fetcher.fetchEmployeeById(3L).getDateOfBirth());
+        System.out.println(fetcher.fetchEmployeeById(2L));
+        System.out.println(fetcher.fetchEmployeeById(3L));
         System.out.println(fetcher.fetchEmployeeById(4L));
     }
 
     public Employee fetchEmployeeById(Long id) {
-        String url = "http://localhost:8080/employees/" + id;
+        String url = "https://capstone-ra2vbiizyq-uc.a.run.app/employees/" + id;
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setErrorHandler(new EmployeeErrorHandler());
         Employee employee = restTemplate.getForObject(url, Employee.class);
