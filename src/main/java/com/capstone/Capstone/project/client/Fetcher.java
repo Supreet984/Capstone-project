@@ -34,6 +34,7 @@ public class Fetcher {
 
     public static String decrypt(String encryptedText) throws Exception {
         String ALGORITHM = "AES/CBC/PKCS5Padding";
+        
         String KEY = "0123456789abcdef0123456789abcdef";
         String IV = "0123456789abcdef";
         byte[] keyBytes = KEY.getBytes(StandardCharsets.UTF_8);
