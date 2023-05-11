@@ -1,8 +1,7 @@
-package com.capstone.Capstone.project.bootstraps;
+package com.capstone.project.bootstraps;
 
-import com.capstone.Capstone.project.entities.Employee;
-import com.capstone.Capstone.project.repositories.EmployeeRepository;
-import com.capstone.Capstone.project.services.EmployeeService;
+import com.capstone.project.entities.Employee;
+import com.capstone.project.services.EmployeeService;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

@@ -1,8 +1,7 @@
-package com.capstone.Capstone.project.Controller;
+package com.capstone.project.controller;
 
-import com.capstone.Capstone.project.CapstoneProjectApplication;
-import com.capstone.Capstone.project.entities.Employee;
-import com.capstone.Capstone.project.services.EmployeeService;
+import com.capstone.project.entities.Employee;
+import com.capstone.project.services.EmployeeService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,13 +14,13 @@ import java.util.Date;
 @AllArgsConstructor
 public class EmployeeController {
     private final EmployeeService employeeService;
-    private static final Logger logger = LoggerFactory.getLogger(CapstoneProjectApplication.class);
+    private static final Logger logger = LoggerFactory.getLogger(EmployeeController.class);
+
     // default
     @GetMapping("/")
     public String home() {
         logger.info("Home Page");
         String html = "<h1>Serving from Spring Boot, Hosted on Kubernetes Cluster on GCP</h1>";
-        //field to enter employee id, when clicked, it will redirect to /employees/{id}
         html += """
                 <form action="/employees/byID" method="get">
                   Employee ID:<br>
@@ -29,24 +28,21 @@ public class EmployeeController {
                   <br>
                   <input type="submit" value="Submit">
                 </form>\s""";
-        //button to redirect to /employees
-        html += "<form action=\"/employees\" method=\"get\">\n" +
-                "  <input type=\"submit\" value=\"Get All Employees\">\n" +
-                "</form> ";
+        html += "<form action=\"/employees\" method=\"get\">\n" + "  <input type=\"submit\" value=\"Get All Employees\">\n" + "</form> ";
         return html;
     }
 
     //get all
     @GetMapping("/employees")
     public ResponseEntity<?> getAllEmployees() {
-        logger.info("Get All Employees"+ " " + new Date());
+        logger.info("Get All Employees" + " " + new Date());
         return employeeService.getAllEmployees();
     }
 
     //get by id
     @GetMapping("/employees/{id}")
     public ResponseEntity<?> getEmployeeById(@PathVariable String id) {
-        try{
+        try {
             Long.parseLong(id);
         } catch (NumberFormatException e) {
             return ResponseEntity.badRequest().body("Invalid ID");
@@ -58,20 +54,20 @@ public class EmployeeController {
     //add
     @PostMapping("/employees/add")
     public ResponseEntity<?> addEmployee(@RequestBody Employee employee) throws Exception {
-        logger.info("Add Employee: " + employee.getEmployeeName() + " " + employee.getDateOfBirth()+ " " + new Date());
+        logger.info("Add Employee: " + employee.getEmployeeName() + " " + employee.getDateOfBirth() + " " + new Date());
         return employeeService.addEmployee(employee);
     }
 
     //update
     @PutMapping("/employees/update")
     public ResponseEntity<?> updateEmployee(@RequestBody Employee employee) {
-        logger.info("Update Employee: " + employee.getEmployeeName() + " " + employee.getDateOfBirth()+ " " + new Date());
+        logger.info("Update Employee: " + employee.getEmployeeName() + " " + employee.getDateOfBirth() + " " + new Date());
         return employeeService.updateEmployee(employee);
     }
 
     @DeleteMapping("/employees/delete/{id}")
     public ResponseEntity<?> deleteEmployee(@PathVariable String id) {
-        try{
+        try {
             Long.parseLong(id);
         } catch (NumberFormatException e) {
             return ResponseEntity.badRequest().body("Invalid ID");
@@ -83,7 +79,7 @@ public class EmployeeController {
     //employees/byID?id=1
     @GetMapping("/employees/byID")
     public ResponseEntity<?> getEmployeeByIdParam(@RequestParam String id) {
-        try{
+        try {
             Long.parseLong(id);
         } catch (NumberFormatException e) {
             return ResponseEntity.badRequest().body("Invalid ID");

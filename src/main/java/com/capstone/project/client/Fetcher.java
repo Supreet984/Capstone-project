@@ -1,11 +1,12 @@
-package com.capstone.Capstone.project.client;
+package com.capstone.project.client;
 
-import com.capstone.Capstone.project.entities.Employee;
+import com.capstone.project.entities.Employee;
 import org.springframework.web.client.RestTemplate;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import javax.swing.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
@@ -23,18 +24,18 @@ public class Fetcher {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setErrorHandler(new EmployeeErrorHandler());
         Employee employee = restTemplate.getForObject(url, Employee.class);
-        if (employee!=null&&employee.getDateOfBirth() != null)
+        if (employee != null && employee.getDateOfBirth() != null)
             try {
                 employee.setDateOfBirth(decrypt(employee.getDateOfBirth()));
             } catch (Exception e) {
-                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         return employee;
     }
 
     public static String decrypt(String encryptedText) throws Exception {
         String ALGORITHM = "AES/CBC/PKCS5Padding";
-        
+
         String KEY = "0123456789abcdef0123456789abcdef";
         String IV = "0123456789abcdef";
         byte[] keyBytes = KEY.getBytes(StandardCharsets.UTF_8);

@@ -1,7 +1,7 @@
-package com.capstone.Capstone.project.services;
+package com.capstone.project.services;
 
-import com.capstone.Capstone.project.entities.Employee;
-import com.capstone.Capstone.project.repositories.EmployeeRepository;
+import com.capstone.project.entities.Employee;
+import com.capstone.project.repositories.EmployeeRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.http.ResponseEntity;
@@ -79,9 +79,8 @@ public class EmployeeService {
         cipher.init(Cipher.ENCRYPT_MODE, keySpec, ivSpec);
 
         byte[] encryptedBytes = cipher.doFinal(plainText.getBytes(StandardCharsets.UTF_8));
-        String encryptedText = Base64.getEncoder().encodeToString(encryptedBytes);
 
-        return encryptedText;
+        return Base64.getEncoder().encodeToString(encryptedBytes);
     }
 }
 

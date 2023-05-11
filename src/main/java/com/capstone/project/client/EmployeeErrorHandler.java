@@ -1,4 +1,4 @@
-package com.capstone.Capstone.project.client;
+package com.capstone.project.client;
 
 import org.springframework.web.client.ResponseErrorHandler;
 

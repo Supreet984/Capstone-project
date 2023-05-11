@@ -1,8 +1,8 @@
-package com.capstone.Capstone.project.Controller;
+package com.capstone.project.controller;
 
-import com.capstone.Capstone.project.entities.Employee;
-import com.capstone.Capstone.project.repositories.EmployeeRepository;
-import com.capstone.Capstone.project.services.EmployeeService;
+import com.capstone.project.entities.Employee;
+import com.capstone.project.repositories.EmployeeRepository;
+import com.capstone.project.services.EmployeeService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

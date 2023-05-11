@@ -1,4 +1,4 @@
-package com.capstone.Capstone.project;
+package com.capstone.project;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
