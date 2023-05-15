@@ -60,7 +60,7 @@ class EmployeeControllerTest {
     }
 
     @Test
-    void getEmployeeById() {
+    void ogetEmployeeById() {
         mock(EmployeeController.class);
         mock(EmployeeRepository.class);
         when(employeeRepository.findById(1L)).thenReturn(java.util.Optional.of(employee));
