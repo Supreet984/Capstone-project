@@ -64,7 +64,6 @@ public class EmployeeService {
     }
 
 
-
     public static String encrypt(String plainText) throws Exception {
         String ALGORITHM = "AES/CBC/PKCS5Padding";
         String KEY = "0123456789abcdef0123456789abcdef";
@@ -81,6 +80,10 @@ public class EmployeeService {
         byte[] encryptedBytes = cipher.doFinal(plainText.getBytes(StandardCharsets.UTF_8));
 
         return Base64.getEncoder().encodeToString(encryptedBytes);
+    }
+
+    public void removeAll() {
+        employeeRepository.deleteAll();
     }
 }
 
