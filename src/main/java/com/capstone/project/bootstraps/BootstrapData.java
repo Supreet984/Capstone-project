@@ -36,8 +36,7 @@ public class BootstrapData implements CommandLineRunner {
 
         Employee employee4 = new Employee();
         employee4.setEmployeeName("Mickey");
-        employee4.setDateOfBirth("11/1/1995");
-        employeeService.addEmployee(employee4);
+        employee4.setDateOfBirth("11/1/1995");employeeService.addEmployee(employee4);
 
     }
 }
