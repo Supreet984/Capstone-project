@@ -14,20 +14,26 @@ public class BootstrapData implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         employeeService.removeAll();
-        Employee employee = new Employee();
-        employee.setEmployeeName("John");
-        employee.setDateOfBirth("12/12/1990");
+        Employee employee = Employee.builder()
+                .employeeName("John")
+                .dateOfBirth("12/12/1990")
+                .build();
         employeeService.addEmployee(employee);
-        Employee employee1 = new Employee();
 
-        employee1.setEmployeeName("Raj");
-        employee1.setDateOfBirth("12/12/1990");
+        Employee employee1 = Employee.builder()
+                .employeeName("Raj")
+                .dateOfBirth("11/12/1990")
+                .build();
         employeeService.addEmployee(employee1);
-        Employee employee2 = new Employee();
 
-        employee2.setEmployeeName("Mike");
-        employee2.setDateOfBirth("12/12/1990");
+
+        Employee employee2 = Employee.builder()
+                .employeeName("Mike")
+                .dateOfBirth("12/12/1990")
+                        .build();
         employeeService.addEmployee(employee2);
+
+
         Employee employee3 = new Employee();
 
         employee3.setEmployeeName("Ravi");
@@ -36,7 +42,8 @@ public class BootstrapData implements CommandLineRunner {
 
         Employee employee4 = new Employee();
         employee4.setEmployeeName("Mickey");
-        employee4.setDateOfBirth("11/1/1995");employeeService.addEmployee(employee4);
+        employee4.setDateOfBirth("11/1/1995");
+        employeeService.addEmployee(employee4);
 
     }
 }

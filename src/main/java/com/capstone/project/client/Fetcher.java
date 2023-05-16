@@ -12,7 +12,7 @@ import java.util.Base64;
 
 public class Fetcher {
     public Employee fetchEmployeeById(Long id) throws Exception {
-        String url = "https://capstone-ra2vbiizyq-uc.a.run.app/employees/" + id;
+        String url = "http://localhost:8080/employees/" + id;
         RestTemplate restTemplate = new RestTemplate();
         Employee employee = restTemplate.getForObject(url, Employee.class);
         employee.setDateOfBirth(decrypt(employee.getDateOfBirth()));
@@ -24,6 +24,10 @@ public class Fetcher {
         System.out.println(fetcher.fetchEmployeeById(1L));
         System.out.println(fetcher.fetchEmployeeById(2L));
         System.out.println(fetcher.fetchEmployeeById(3L));
+        System.out.println(fetcher.fetchEmployeeById(4L));
+        System.out.println(fetcher.fetchEmployeeById(5L));
+
+
     }
 
     public static String decrypt(String encryptedText) throws Exception {

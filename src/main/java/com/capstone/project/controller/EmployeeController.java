@@ -1,20 +1,43 @@
 package com.capstone.project.controller;
 
-import com.capstone.project.entities.Employee;
+import com.capstone.project.services.EmployeeNotFound;
 import com.capstone.project.services.EmployeeService;
-import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 
 @RestController
-@AllArgsConstructor
 public class EmployeeController {
-    private final EmployeeService employeeService;
+
+    @Autowired
+    private EmployeeService employeeService;
     private static final Logger logger = LoggerFactory.getLogger(EmployeeController.class);
+
+    //get by id
+    @GetMapping("/employees/{id}")
+    public ResponseEntity<?> getEmployee(@PathVariable String id) {
+        logger.info("Get Employee By ID: " + id + " " + new Date());
+
+        long employeeID;
+        try {
+            employeeID = Long.parseLong(id);
+        } catch (Exception ex) {
+            return ResponseEntity.status(500).body("Please enter the id");
+        }
+
+        try {
+            return ResponseEntity.ok(employeeService.getEmployee(employeeID));
+        } catch (EmployeeNotFound ex) {
+            return ResponseEntity.status(400).body(ex.toString());
+        }
+    }
 
     // default
     @GetMapping("/")
@@ -39,53 +62,16 @@ public class EmployeeController {
         return employeeService.getAllEmployees();
     }
 
-    //get by id
-    @GetMapping("/employees/{id}")
-    public ResponseEntity<?> getEmployeeById(@PathVariable String id) {
-        try {
-            Long.parseLong(id);
-        } catch (NumberFormatException e) {
-            return ResponseEntity.badRequest().body("Invalid ID");
-        }
-        logger.info("Get Employee By ID: " + id + " " + new Date());
-        return employeeService.getEmployeeById(Long.parseLong(id));
-    }
-
-    //add
-    @PostMapping("/employees/add")
-    public ResponseEntity<?> addEmployee(@RequestBody Employee employee) throws Exception {
-        logger.info("Add Employee: " + employee.getEmployeeName() + " " + employee.getDateOfBirth() + " " + new Date());
-        return employeeService.addEmployee(employee);
-    }
-
-    //update
-    @PutMapping("/employees/update")
-    public ResponseEntity<?> updateEmployee(@RequestBody Employee employee) {
-        logger.info("Update Employee: " + employee.getEmployeeName() + " " + employee.getDateOfBirth() + " " + new Date());
-        return employeeService.updateEmployee(employee);
-    }
-
-    @DeleteMapping("/employees/delete/{id}")
-    public ResponseEntity<?> deleteEmployee(@PathVariable String id) {
-        try {
-            Long.parseLong(id);
-        } catch (NumberFormatException e) {
-            return ResponseEntity.badRequest().body("Invalid ID");
-        }
-        logger.info("Delete Employee: " + id);
-        return employeeService.deleteEmployee(Long.parseLong(id));
-    }
-
     //employees/byID?id=1
     @GetMapping("/employees/byID")
-    public ResponseEntity<?> getEmployeeByIdParam(@RequestParam String id) {
+    public ResponseEntity<?> getEmployeeByIdParam(@RequestParam String id) throws EmployeeNotFound {
         try {
             Long.parseLong(id);
         } catch (NumberFormatException e) {
             return ResponseEntity.badRequest().body("Invalid ID");
         }
         logger.info("Get Employee By ID: " + id + " " + new Date());
-        return employeeService.getEmployeeById(Long.parseLong(id));
+        return ResponseEntity.ok(employeeService.getEmployee(Long.parseLong(id)));
     }
 
 }

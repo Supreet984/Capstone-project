@@ -59,22 +59,4 @@ class EmployeeControllerTest {
         assert (employee.getEmployeeName().equals("Test Employee"));
     }
 
-    @Test
-    void ogetEmployeeById() {
-        mock(EmployeeController.class);
-        mock(EmployeeRepository.class);
-        when(employeeRepository.findById(1L)).thenReturn(java.util.Optional.of(employee));
-        assert (employee.getEmployeeName().equals("Test Employee"));
-    }
-
-
-    @Test
-    void updateEmployee() {
-        mock(EmployeeController.class);
-        mock(EmployeeRepository.class);
-        when(employeeRepository.save(employee)).thenReturn(employee);
-        assert (employee.getEmployeeName().equals("Test Employee"));
-
-    }
-
 }

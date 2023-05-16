@@ -25,15 +25,11 @@ public class EmployeeService {
         return ResponseEntity.ok(employeeRepository.findAll());
     }
 
-    //get by id
-    public ResponseEntity<?> getEmployeeById(Long id) {
-        if (id == null)
-            return ResponseEntity.badRequest().body(new EmployeeNotFoundException("Employee not found", 404));
-        Optional<Employee> employee = employeeRepository.findById(id);
-        if (employee.isPresent()) {
-            return ResponseEntity.ok(employee.get());
+    public Employee getEmployee(Long id) throws EmployeeNotFound {
+        if (employeeRepository.findById(id).isPresent()) {
+            return employeeRepository.findById(id).get();
         } else {
-            return ResponseEntity.badRequest().body(new EmployeeNotFoundException("Employee not found", 404));
+            throw new EmployeeNotFound("Employee with Id:" + id + "Not Found");
         }
     }
 
@@ -42,27 +38,6 @@ public class EmployeeService {
         employee.setDateOfBirth(encrypt(employee.getDateOfBirth()));
         return ResponseEntity.ok(employeeRepository.save(employee));
     }
-
-    //update
-    public ResponseEntity<?> updateEmployee(Employee employee) {
-        Optional<Employee> employeeOptional = employeeRepository.findById(employee.getEmployeeID());
-        if (employeeOptional.isPresent()) {
-            return ResponseEntity.ok(employeeRepository.save(employee));
-        } else {
-            return ResponseEntity.badRequest().body(new EmployeeNotFoundException("Employee not found", 404));
-        }
-    }
-
-    public ResponseEntity<?> deleteEmployee(Long id) {
-        Optional<Employee> employee = employeeRepository.findById(id);
-        if (employee.isPresent()) {
-            employeeRepository.delete(employee.get());
-            return ResponseEntity.ok("Employee deleted");
-        } else {
-            return ResponseEntity.badRequest().body(new EmployeeNotFoundException("Employee not found", 404));
-        }
-    }
-
 
     public static String encrypt(String plainText) throws Exception {
         String ALGORITHM = "AES/CBC/PKCS5Padding";
@@ -87,9 +62,3 @@ public class EmployeeService {
     }
 }
 
-@Data
-@AllArgsConstructor
-class EmployeeNotFoundException {
-    private String message;
-    private int status;
-}
