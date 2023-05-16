@@ -39,7 +39,5 @@ public class BootstrapData implements CommandLineRunner {
         employee4.setDateOfBirth("11/1/1995");
         employeeService.addEmployee(employee4);
 
-
-
     }
 }
