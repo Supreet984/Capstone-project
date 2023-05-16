@@ -1,15 +1,13 @@
 package com.capstone.project.controller;
 
+import com.capstone.project.entities.Employee;
 import com.capstone.project.services.EmployeeNotFound;
 import com.capstone.project.services.EmployeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
@@ -62,6 +60,7 @@ public class EmployeeController {
         return employeeService.getAllEmployees();
     }
 
+
     //employees/byID?id=1
     @GetMapping("/employees/byID")
     public ResponseEntity<?> getEmployeeByIdParam(@RequestParam String id) throws EmployeeNotFound {
@@ -74,4 +73,13 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeService.getEmployee(Long.parseLong(id)));
     }
 
-}
+    @GetMapping("/employees/byName/{name}")
+    public ResponseEntity<?> getEmployeeByName(@PathVariable String name){
+       logger.info("Get Employees By name"+name+" "+new Date());
+       return ResponseEntity.ok(employeeService.getByName(name));
+
+        }
+    }
+
+
+

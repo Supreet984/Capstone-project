@@ -34,9 +34,17 @@ public class EmployeeService {
     }
 
     //add
-    public ResponseEntity<?> addEmployee(Employee employee) throws Exception {
-        employee.setDateOfBirth(encrypt(employee.getDateOfBirth()));
-        return ResponseEntity.ok(employeeRepository.save(employee));
+    public ResponseEntity<?> addEmployee(Employee employee) {
+        try {
+            employee.setDateOfBirth(encrypt(employee.getDateOfBirth()));
+            return ResponseEntity.ok(employeeRepository.save(employee));
+        }catch (Exception ex){
+            return ResponseEntity.status(500).body("Algorithm Error");
+        }
+    }
+
+    public Employee getByName(String name){
+        return employeeRepository.findByEmployeeName(name);
     }
 
     public static String encrypt(String plainText) throws Exception {
